@@ -2,7 +2,7 @@
 
 
 This is a basic zombie game implementation in Golang.
-To start a game run the go server, by building the package or running `go run *.go` which you can access via telnet.
+To start a game run the go server, by building the package or running `go run *.go`, and then you can access the server via telnet or netcat on port 8000.
 
 From there, the command's are:
   1) `START <NAME>` to start a new game.

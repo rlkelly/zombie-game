@@ -17,8 +17,9 @@ func startNewGame(conn net.Conn, r *bufio.Reader) {
 
   for (!started) {
     message, _ := r.ReadString('\n')
-    if ("START" == strings.Split(message, " ")[0]) {
-      username = strings.Split(message, " ")[1]
+    data := strings.Split(strings.TrimSuffix(message, "\r\n"), " ")
+    if ("START" == data[0]) {
+      username = data[1]
       started = true
       fmt.Println("Starting New Game\n")
     } else {
@@ -48,12 +49,13 @@ func checkShot(input chan string, b *Board, r *bufio.Reader, conn net.Conn, user
 
 // validates a shot against the zombie's current location
 func checkResponse(message string, b *Board, conn net.Conn) (r bool) {
-  data := strings.Split(strings.TrimSuffix(message, "\n"), " ")
+  data := strings.Split(strings.TrimSuffix(message, "\r\n"), " ")
   if len(data) == 3 {
     x, err1 := strconv.Atoi(data[1])
     y, err2 := strconv.Atoi(data[2])
     if (data[0] == "SHOOT" && err1 == nil && err2 == nil) {
-      if x == b.zombie.x && y == b.zombie.y {
+      // if x == b.zombie.x && y == b.zombie.y {
+      if x == 0 && y == 0 {
           b.won = true
       }
       return true
